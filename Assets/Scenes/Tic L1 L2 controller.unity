@@ -213,10 +213,10 @@ RectTransform:
   m_Father: {fileID: 212114578}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -170}
-  m_SizeDelta: {x: -600, y: 50}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0, y: 35}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &131645326
 MonoBehaviour:
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 18
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -50.861874, w: 0}
+  m_margin: {x: -5.24469, y: 0, z: -50.861874, w: 0}
   m_textInfo:
     textComponent: {fileID: 131645326}
     characterCount: 24
@@ -310,7 +310,7 @@ MonoBehaviour:
     spaceCount: 3
     wordCount: 4
     linkCount: 0
-    lineCount: 2
+    lineCount: 1
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -726,12 +726,12 @@ GameObject:
   - component: {fileID: 640311810}
   - component: {fileID: 640311809}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: PanelDialogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &640311808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -750,7 +750,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 140}
+  m_SizeDelta: {x: 0, y: 110.73}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &640311809
 MonoBehaviour:
@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.002447496, g: 0.14901961, b: 0.5188679, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.627451}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -951,9 +951,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b53c5d23aa604a4f9247b0297fdaeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrayMisiones: []
+  arrayDialogos: []
   interactionText: {fileID: 131645324}
   panelDialogos: {fileID: 640311807}
+  textoDelDialogo: {fileID: 887734216}
+  posicionFrase: 0
 --- !u!1 &887734214
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,7 +990,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -286, y: -70}
+  m_AnchoredPosition: {x: -286, y: -60}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &887734216
@@ -1009,7 +1011,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hola como estas!
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11566,6 +11568,7 @@ GameObject:
   - component: {fileID: 1340523867}
   - component: {fileID: 1340523866}
   - component: {fileID: 1340523865}
+  - component: {fileID: 1340523870}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -11659,6 +11662,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1340523870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1340523864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b14b2a155bc0374ba79f62297585c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 93fc16c6ee354ee4a949e0e6496ec07c, type: 2}
 --- !u!1 &1345199850
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,4 +16,5 @@ MonoBehaviour:
   - "Te quedaste haciendo el tp de Jero y cerr\xF3 el colegio? Suele pasar"
   - Si me ayudas a buscar algo te ayudo a salir ;)
   - "Encontr\xE1 las 3 macs y nos podemos ir"
-  hasTalked: 0
+  finishedTalking: 0
+  startedTalking: 0

@@ -9,6 +9,7 @@ TagManager:
   - NPC
   - Props
   - macs
+  - puerta
   layers:
   - Default
   - TransparentFX

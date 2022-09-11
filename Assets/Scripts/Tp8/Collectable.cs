@@ -10,13 +10,13 @@ public class Collectable : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        if (data.collected)
+        if (data.collected) //Si ya se recolectó
 		{
 			DisableCollectableComponents();
 			
 		}
 
-		a = FindObjectOfType<DialogueManager>();
+		a = FindObjectOfType<DialogueManager>();	//Busco al gameobject que tiene el script para acceder a el
     }
 
     // Update is called once per frame
@@ -29,6 +29,7 @@ public class Collectable : MonoBehaviour
 	{
 		
 		data.collected = true;		//Modifico la variable del SO
+
 		DisableCollectableComponents();
 
 		a.objetosRecolectados += 1;	//Cuando se clickea sobre un recolectable, se suma al contador

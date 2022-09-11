@@ -7,7 +7,7 @@ public class DialogueManager : MonoBehaviour
 {
 	[SerializeField] GameObject NPC;
 
-	NPCData npcData;
+	
 
 	[SerializeField] string[] arrayDialogos;
 	[SerializeField] GameObject[] arrayMesas;
@@ -31,7 +31,8 @@ public class DialogueManager : MonoBehaviour
 
 
 	bool interactionActive;
-	
+	bool startedDialogue;
+	bool finishedTalking;
 
 	
 
@@ -51,7 +52,7 @@ public class DialogueManager : MonoBehaviour
 		AddComponentsToArray(arrayMesas);
 		AddComponentsToArray(puertas);
 
-		npcData = FindObjectOfType<NPCData>();
+		
 
 		totalMacs = GameObject.FindGameObjectsWithTag("macs").Length;
 	}
@@ -59,7 +60,7 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(interactionActive && Input.GetKeyDown(KeyCode.R) && !npcData.startedTalking)    //Si se activó la interacción, se presiona R y es la primer interaccion
+		if(interactionActive && Input.GetKeyDown(KeyCode.R) && !startedDialogue)    //Si se activó la interacción, se presiona R y es la primer interaccion
 		{
 			EmpezarDialogo();   //Se invoca...	
 			
@@ -78,14 +79,14 @@ public class DialogueManager : MonoBehaviour
 
 	void EmpezarDialogo()
 	{
-		npcData.startedTalking = true;     //Empezó el dialogo
+		startedDialogue = true;     //Empezó el dialogo
 		panelDialogos.SetActive(true);      //Activo el panel para el texto
 		interactionText.SetActive(false);   //Desactivo el mensaje para interactuar
 	}
 
 	void NextFrase()
 	{
-		if (Input.GetKeyDown(KeyCode.R) && npcData.startedTalking)		//Si se aprieta R y ya se interactuó
+		if (Input.GetKeyDown(KeyCode.R) && startedDialogue)		//Si se aprieta R y ya se interactuó
 		{
 			posicionFrase++;        //Aumenta el indice del dialogo
 
@@ -97,7 +98,7 @@ public class DialogueManager : MonoBehaviour
 			else    //Si ya terminó
 			{
 				panelDialogos.SetActive(false);
-				npcData.finishedTalking = true;
+				finishedTalking = true;
 				panelRecolectados.SetActive(true);
 				
 			}
@@ -111,13 +112,13 @@ public class DialogueManager : MonoBehaviour
 		{
 			arrayDialogos = other.gameObject.GetComponent<NpcBehaviour>().data.dialogueFrases;	//Se le asigna al array las frases cargadas al SO
 
-			if (!npcData.startedTalking)  //Si no habló todavía...
+			if (!startedDialogue)  //Si no habló todavía...
 			{
 				interactionText.SetActive(true);    //Se activa la opcion de interaccion
 				interactionActive = true;
 
 			}
-			else if (npcData.finishedTalking)	//Si ya hablo previamente...
+			else if (finishedTalking)	//Si ya hablo previamente...
 			{
 
 				textoDelDialogo.text = "Anda a buscar";

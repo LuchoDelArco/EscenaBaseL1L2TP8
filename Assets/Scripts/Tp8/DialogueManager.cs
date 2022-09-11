@@ -5,41 +5,53 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
+	[SerializeField] GameObject NPC;
+
+	NPCData npcData;
+
 	[SerializeField] string[] arrayDialogos;
 	[SerializeField] GameObject[] arrayMesas;
-	
+
+	[SerializeField] GameObject[] puertas;
 
 	[SerializeField] GameObject interactionText;
+	[SerializeField] GameObject recolectarText;
 
 	[SerializeField] GameObject panelDialogos;
 	[SerializeField] TextMeshProUGUI textoDelDialogo;
-	[SerializeField] GameObject textoCollectables;
+
+	[SerializeField] GameObject panelRecolectados;
+	[SerializeField] TextMeshProUGUI textoRecolectados;
+	
 
 	[SerializeField] int posicionFrase;
 
 	[SerializeField] int totalMacs = 0;
-	int objetosRecolectados = 0;
+	public int objetosRecolectados = 0;
+
 
 	bool interactionActive;
-	bool startedDialogue;
-	public bool talkFinished;
+	
 
-	CollectableDataSO data;
+	
 
     // Start is called before the first frame update
     void Start()
     {
 		arrayMesas = GameObject.FindGameObjectsWithTag("mesa");
+		puertas = GameObject.FindGameObjectsWithTag("puerta");
 		
 
 		interactionText.SetActive(false);
 		panelDialogos.SetActive(false);
+		panelRecolectados.SetActive(false);
 
 		posicionFrase = -1;
 
 		AddComponentsToArray(arrayMesas);
-	
-		
+		AddComponentsToArray(puertas);
+
+		npcData = FindObjectOfType<NPCData>();
 
 		totalMacs = GameObject.FindGameObjectsWithTag("macs").Length;
 	}
@@ -47,38 +59,47 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(interactionActive && Input.GetKeyDown(KeyCode.R) && !startedDialogue)    //Si se activó la interacción, se presiona R y es la primer interaccion
+		if(interactionActive && Input.GetKeyDown(KeyCode.R) && !npcData.startedTalking)    //Si se activó la interacción, se presiona R y es la primer interaccion
 		{
-			EmpezarDialogo();   //Se invoca...		
+			EmpezarDialogo();   //Se invoca...	
+			
 		}
+
 		NextFrase();
+
+		if (objetosRecolectados <= totalMacs)	
+		{
+			textoRecolectados.text = "Objetos recolectados: " + objetosRecolectados + "/" + totalMacs;	//Mostrar objetos recolectados
+		}
+		
     }
 
 	
 
 	void EmpezarDialogo()
 	{
-		startedDialogue = true;     //Empezó el dialogo
+		npcData.startedTalking = true;     //Empezó el dialogo
 		panelDialogos.SetActive(true);      //Activo el panel para el texto
 		interactionText.SetActive(false);   //Desactivo el mensaje para interactuar
 	}
 
 	void NextFrase()
 	{
-		if (Input.GetKeyDown(KeyCode.R))
+		if (Input.GetKeyDown(KeyCode.R) && npcData.startedTalking)		//Si se aprieta R y ya se interactuó
 		{
 			posicionFrase++;        //Aumenta el indice del dialogo
 
 			if (posicionFrase < arrayDialogos.Length) //Si todavía no se llego al final de los dialogos...
 			{
 				textoDelDialogo.text = arrayDialogos[posicionFrase];    //El texto que se muestra es el de la posición del indice
-
 			}
-			else
+
+			else    //Si ya terminó
 			{
 				panelDialogos.SetActive(false);
-				talkFinished = true;
-				//interactionText.SetActive(true);
+				npcData.finishedTalking = true;
+				panelRecolectados.SetActive(true);
+				
 			}
 		}
 	}
@@ -88,18 +109,42 @@ public class DialogueManager : MonoBehaviour
 	{	
 		if (other.gameObject.CompareTag("NPC"))
 		{
-			arrayDialogos = other.gameObject.GetComponent<NpcBehaviour>().data.dialogueFrases;
+			arrayDialogos = other.gameObject.GetComponent<NpcBehaviour>().data.dialogueFrases;	//Se le asigna al array las frases cargadas al SO
 
-			if (!startedDialogue)  //Si no habló todavía...
+			if (!npcData.startedTalking)  //Si no habló todavía...
 			{
 				interactionText.SetActive(true);    //Se activa la opcion de interaccion
 				interactionActive = true;
 
 			}
-			else if (startedDialogue && posicionFrase == arrayDialogos.Length)	//Si ya hablo previamente...
+			else if (npcData.finishedTalking)	//Si ya hablo previamente...
 			{
-				textoDelDialogo.text = "ya hemos hablado";
-				panelDialogos.SetActive(true);		
+
+				textoDelDialogo.text = "Anda a buscar";
+				
+
+				if (objetosRecolectados > 0 && objetosRecolectados < totalMacs)		//Si ya encontró alguno...
+				{
+					textoDelDialogo.text = "Bien, encontraste " + objetosRecolectados + " segui buscando";
+					
+				}
+				else if (objetosRecolectados == totalMacs)	//Si ya encontró todos...
+				{
+					textoDelDialogo.text = "Excelente! Ya nos podemos ir";
+					panelRecolectados.SetActive(false);
+
+
+					foreach (GameObject go in puertas)
+					{
+						go.transform.Rotate(0, -45, 0);
+					}
+
+					NPC.GetComponent<MeshRenderer>().enabled = false;
+					NPC.GetComponent<BoxCollider>().enabled = false;
+
+				}
+
+				panelDialogos.SetActive(true);
 			}	
 			else //Si estaba hablando
 			{
@@ -108,12 +153,12 @@ public class DialogueManager : MonoBehaviour
 			
 		}
 
-		if (other.gameObject.CompareTag("macs") && talkFinished)
+		if (other.gameObject.CompareTag("macs"))
 		{
-
-			textoCollectables.SetActive(true);	
-
+			recolectarText.SetActive(true);
 		}
+
+		
 	}
 
 	void OnTriggerExit(Collider other)
@@ -126,8 +171,9 @@ public class DialogueManager : MonoBehaviour
 
 		if (other.gameObject.CompareTag("macs"))
 		{
-			textoCollectables.SetActive(false);
+			recolectarText.SetActive(false);
 		}
+
 	}
 
 	void AddComponentsToArray(GameObject[] objeto)
@@ -139,5 +185,6 @@ public class DialogueManager : MonoBehaviour
 		}
 	}
 
+	
 	
 }

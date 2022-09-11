@@ -6,5 +6,6 @@ using UnityEngine;
 public class NPCData : ScriptableObject
 {
 	public string[] dialogueFrases;
-	public bool hasTalked;
+	public bool finishedTalking;
+	public bool startedTalking;
 }

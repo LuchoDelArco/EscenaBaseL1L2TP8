@@ -167,7 +167,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Presione [Q] para recolectar
+  m_text: Click para recolectar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -777,7 +777,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350773673}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.57, y: -0.84, z: -2.364}
+  m_LocalPosition: {x: -6.57, y: -0.84, z: -1.992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1345199851}
@@ -855,8 +855,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.49117664, y: 0.5314877, z: 0.98264694}
-  m_Center: {x: -0.02052851, y: -0.02796346, z: 0.35909796}
+  m_Size: {x: 0.49117664, y: 0.5314877, z: 0.6043587}
+  m_Center: {x: -0.02052851, y: -0.02796346, z: 0.16995382}
 --- !u!1 &381916893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1223,6 +1223,7 @@ MonoBehaviour:
   textoCollectables: {fileID: 37061862}
   posicionFrase: 0
   totalMacs: 0
+  talkFinished: 0
 --- !u!1 &887734214
 GameObject:
   m_ObjectHideFlags: 0
@@ -7850,6 +7851,7 @@ GameObject:
   - component: {fileID: 1104782061}
   - component: {fileID: 1106984110}
   - component: {fileID: 1106984112}
+  - component: {fileID: 1106984114}
   m_Layer: 0
   m_Name: iMac1
   m_TagString: macs
@@ -7899,8 +7901,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.54894096, y: 0.86918384, z: 0.60692906}
-  m_Center: {x: -0.04941067, y: -0.08777693, z: -0.039891124}
+  m_Size: {x: 0.7459062, y: 0.86918384, z: 0.794893}
+  m_Center: {x: -0.14789328, y: -0.08777693, z: -0.1338731}
 --- !u!1 &1106984113
 GameObject:
   m_ObjectHideFlags: 0
@@ -7919,6 +7921,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1106984114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106984109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95dff45e32ab8004c99dd91d08d3520a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 20a4d51387268a047bc69e1f2fa9102d, type: 2}
 --- !u!1 &1106984115
 GameObject:
   m_ObjectHideFlags: 0
@@ -11993,7 +12008,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1340523864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.27062997, y: 0.882, z: 3.8073757}
+  m_LocalPosition: {x: -12.21, y: 0.882, z: 4.01}
   m_LocalScale: {x: 1, y: 0.87374, z: 0.88097}
   m_Children: []
   m_Father: {fileID: 0}

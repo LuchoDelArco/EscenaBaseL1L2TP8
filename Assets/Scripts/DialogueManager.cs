@@ -22,9 +22,9 @@ public class DialogueManager : MonoBehaviour
 
 	bool interactionActive;
 	bool startedDialogue;
-	bool talkFinished;
+	public bool talkFinished;
 
-	CollectableData data;
+	CollectableDataSO data;
 
     // Start is called before the first frame update
     void Start()
@@ -111,15 +111,7 @@ public class DialogueManager : MonoBehaviour
 		if (other.gameObject.CompareTag("macs") && talkFinished)
 		{
 
-
-
-			textoCollectables.SetActive(true);
-			if (Input.GetKeyDown(KeyCode.Q))
-			{																////////////////////////////////////////////////////////
-				objetosRecolectados += 1;
-				Destroy(other.gameObject);
-			}
-			
+			textoCollectables.SetActive(true);	
 
 		}
 	}
@@ -147,10 +139,5 @@ public class DialogueManager : MonoBehaviour
 		}
 	}
 
-	private void OnMouseDown()
-	{
-		data.collected = true;
-		Destroy
-	}
-
+	
 }

@@ -7,6 +7,8 @@ TagManager:
   - Silla
   - mesa
   - NPC
+  - Props
+  - macs
   layers:
   - Default
   - TransparentFX

@@ -6,26 +6,42 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
 	[SerializeField] string[] arrayDialogos;
+	[SerializeField] GameObject[] arrayMesas;
+	
 
 	[SerializeField] GameObject interactionText;
 
 	[SerializeField] GameObject panelDialogos;
 	[SerializeField] TextMeshProUGUI textoDelDialogo;
+	[SerializeField] GameObject textoCollectables;
 
 	[SerializeField] int posicionFrase;
+
+	[SerializeField] int totalMacs = 0;
+	int objetosRecolectados = 0;
 
 	bool interactionActive;
 	bool startedDialogue;
 	bool talkFinished;
 
+	CollectableData data;
 
     // Start is called before the first frame update
     void Start()
     {
+		arrayMesas = GameObject.FindGameObjectsWithTag("mesa");
+		
+
 		interactionText.SetActive(false);
 		panelDialogos.SetActive(false);
 
 		posicionFrase = -1;
+
+		AddComponentsToArray(arrayMesas);
+	
+		
+
+		totalMacs = GameObject.FindGameObjectsWithTag("macs").Length;
 	}
 
     // Update is called once per frame
@@ -87,11 +103,25 @@ public class DialogueManager : MonoBehaviour
 			}	
 			else //Si estaba hablando
 			{
-				panelDialogos.SetActive(true);
+				panelDialogos.SetActive(true);	//Activa de nuevo el panel
 			} 
 			
 		}
 
+		if (other.gameObject.CompareTag("macs") && talkFinished)
+		{
+
+
+
+			textoCollectables.SetActive(true);
+			if (Input.GetKeyDown(KeyCode.Q))
+			{																////////////////////////////////////////////////////////
+				objetosRecolectados += 1;
+				Destroy(other.gameObject);
+			}
+			
+
+		}
 	}
 
 	void OnTriggerExit(Collider other)
@@ -101,16 +131,26 @@ public class DialogueManager : MonoBehaviour
 			interactionText.SetActive(false);
 			panelDialogos.SetActive(false);
 		}
+
+		if (other.gameObject.CompareTag("macs"))
+		{
+			textoCollectables.SetActive(false);
+		}
 	}
 
-	
+	void AddComponentsToArray(GameObject[] objeto)
+	{
+		foreach (GameObject go in objeto)
+		{
+			go.AddComponent<BoxCollider>();
+			
+		}
+	}
 
-
-	//public void NextFrase()
-	//{
-		
-
-	//}
-
+	private void OnMouseDown()
+	{
+		data.collected = true;
+		Destroy
+	}
 
 }

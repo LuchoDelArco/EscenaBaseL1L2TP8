@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NPCDataSO
   m_EditorClassIdentifier: 
   dialogueFrases:
-  - "Te quedaste haciendo el tp de Jero y cerr\xF3 el colegio!"
-  - "Te propongo una misi\xF3n y si la cumpl\xEDs te ayudo a salir ;)"
-  - "Encontr\xE1 los 3 matafuegos escondidos"
+  - "Te quedaste haciendo el tp de Jero y cerr\xF3 el colegio? Suele pasar"
+  - Si me ayudas a buscar algo te ayudo a salir ;)
+  - "Encontr\xE1 las 3 macs y nos podemos ir"
   hasTalked: 0

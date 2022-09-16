@@ -7,7 +7,7 @@ public class DialogueManager : MonoBehaviour
 {
 	[SerializeField] GameObject NPC;
 
-	
+
 
 	[SerializeField] string[] arrayDialogos;
 	[SerializeField] GameObject[] arrayMesas;
@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
 
 	[SerializeField] GameObject panelRecolectados;
 	[SerializeField] TextMeshProUGUI textoRecolectados;
-	
+
 
 	[SerializeField] int posicionFrase;
 
@@ -34,14 +34,14 @@ public class DialogueManager : MonoBehaviour
 	bool startedDialogue;
 	bool finishedTalking;
 
-	
 
-    // Start is called before the first frame update
-    void Start()
-    {
+
+	// Start is called before the first frame update
+	void Start()
+	{
 		arrayMesas = GameObject.FindGameObjectsWithTag("mesa");
 		puertas = GameObject.FindGameObjectsWithTag("puerta");
-		
+
 
 		interactionText.SetActive(false);
 		panelDialogos.SetActive(false);
@@ -52,41 +52,41 @@ public class DialogueManager : MonoBehaviour
 		AddComponentsToArray(arrayMesas);
 		AddComponentsToArray(puertas);
 
-		
+
 
 		totalMacs = GameObject.FindGameObjectsWithTag("macs").Length;
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-		if(interactionActive && Input.GetKeyDown(KeyCode.R) && !startedDialogue)    //Si se activó la interacción, se presiona R y es la primer interaccion
+	// Update is called once per frame
+	void Update()
+	{
+		if (interactionActive && Input.GetKeyDown(KeyCode.R) && !startedDialogue)    //Si se activó la interacción, se presiona R y es la primer interaccion
 		{
 			EmpezarDialogo();   //Se invoca...	
-			
+
 		}
 
 		NextFrase();
 
-		if (objetosRecolectados <= totalMacs)	
+		if (objetosRecolectados <= totalMacs)
 		{
-			textoRecolectados.text = "Objetos recolectados: " + objetosRecolectados + "/" + totalMacs;	//Mostrar objetos recolectados
+			textoRecolectados.text = "Objetos recolectados: " + objetosRecolectados + "/" + totalMacs;  //Mostrar objetos recolectados
 		}
-		
-    }
 
-	
+	}
+
+
 
 	void EmpezarDialogo()
 	{
 		startedDialogue = true;     //Empezó el dialogo
 		panelDialogos.SetActive(true);      //Activo el panel para el texto
-		interactionText.SetActive(false);   //Desactivo el mensaje para interactuar
+		
 	}
 
 	void NextFrase()
 	{
-		if (Input.GetKeyDown(KeyCode.R) && startedDialogue)		//Si se aprieta R y ya se interactuó
+		if (Input.GetKeyDown(KeyCode.R) && startedDialogue)     //Si se aprieta R y ya se interactuó
 		{
 			posicionFrase++;        //Aumenta el indice del dialogo
 
@@ -100,17 +100,17 @@ public class DialogueManager : MonoBehaviour
 				panelDialogos.SetActive(false);
 				finishedTalking = true;
 				panelRecolectados.SetActive(true);
-				
+
 			}
 		}
 	}
 
 
-	void OnTriggerEnter(Collider other)		//Al entrar en contacto
-	{	
+	void OnTriggerEnter(Collider other)     //Al entrar en contacto
+	{
 		if (other.gameObject.CompareTag("NPC"))
 		{
-			arrayDialogos = other.gameObject.GetComponent<NpcBehaviour>().data.dialogueFrases;	//Se le asigna al array las frases cargadas al SO
+			arrayDialogos = other.gameObject.GetComponent<NpcBehaviour>().data.dialogueFrases;  //Se le asigna al array las frases cargadas al SO
 
 			if (!startedDialogue)  //Si no habló todavía...
 			{
@@ -118,18 +118,18 @@ public class DialogueManager : MonoBehaviour
 				interactionActive = true;
 
 			}
-			else if (finishedTalking)	//Si ya hablo previamente...
+			else if (finishedTalking)   //Si ya hablo previamente...
 			{
 
 				textoDelDialogo.text = "Anda a buscar";
-				
 
-				if (objetosRecolectados > 0 && objetosRecolectados < totalMacs)		//Si ya encontró alguno...
+
+				if (objetosRecolectados > 0 && objetosRecolectados < totalMacs)     //Si ya encontró alguno...
 				{
 					textoDelDialogo.text = "Bien, encontraste " + objetosRecolectados + " segui buscando";
-					
+
 				}
-				else if (objetosRecolectados == totalMacs)	//Si ya encontró todos...
+				else if (objetosRecolectados == totalMacs)  //Si ya encontró todos...
 				{
 					textoDelDialogo.text = "Excelente! Ya nos podemos ir";
 					panelRecolectados.SetActive(false);
@@ -146,19 +146,20 @@ public class DialogueManager : MonoBehaviour
 				}
 
 				panelDialogos.SetActive(true);
-			}	
+			}
 			else //Si estaba hablando
 			{
-				panelDialogos.SetActive(true);	//Activa de nuevo el panel
-			} 
-			
+				panelDialogos.SetActive(true);  //Activa de nuevo el panel
+			}
+
 		}
 
-		if (other.gameObject.CompareTag("macs"))
+		if (other.gameObject.CompareTag("macs") && finishedTalking)
 		{
 			recolectarText.SetActive(true);
 		}
 
+		
 		
 	}
 
